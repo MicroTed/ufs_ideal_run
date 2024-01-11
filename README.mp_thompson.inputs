@@ -1,0 +1,7 @@
+Note that the Thompson microphysics scheme needs input data:
+CCN_ACTIVATE.BIN 
+freezeH2O.dat 
+qr_acr_qgV2.dat 
+qr_acr_qsV2.dat
+
+Use the included script get_thompson_tables.sh to retrieve these files if you don't have them sitting around already.

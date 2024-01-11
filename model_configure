@@ -1,0 +1,81 @@
+total_member:            1
+PE_MEMBER01:             8
+print_esmf:              .false.
+# start_ inputs are only important for time of day if radiation is included
+# Remember to set start time to the same values in diag_table
+start_year:              2019
+start_month:             6
+start_day:               15
+start_hour:              18
+start_minute:            0
+start_second:            0
+# values for nhours_fcst (length of simulation in hours) can be fractional
+nhours_fcst:             0.16666666666666666
+#nhours_fcst:             2
+#nhours_fcst:             0.5
+RUN_CONTINUE:            .false.
+ENS_SPS:                 .false.
+# model time step (seconds)
+# dt_atmos:                 6
+dt_atmos:                10
+# output frequency is in hours, and can be fractional to get, say, 5, 10, 15 min. output (e.g., 0.08333333333333333,  0.16666666666666666, 0.25). Trailing '-1' is needed
+# Remember to set intervals in diag_table to match the output frequency here
+output_fh:               0.08333333333333333 -1
+# output_fh:               0.002777777777778 0.08333333333333333 -1
+# output_fh:               0.16666666666666666 -1
+cpl:                     .false.
+calendar:                'julian'
+memuse_verbose:          .false.
+atmos_nthreads:          1
+restart_interval:        0  -1
+output_1st_tstep_rst:    .false.
+write_dopost:            .false.
+ideflate:                0
+nbits:                   0
+quilting:                .false.
+
+# NOTHING BELOW HERE IS NEEDED FOR IDEAL CASE (quilting=false)
+#
+# Write-component (quilting) computational parameters.
+#
+write_groups:            1
+write_tasks_per_group:   5
+num_files:               2
+filename_base:           'dyn' 'phy'
+output_file:             'netcdf' 'netcdf'
+#
+# Write-component output frequency parameter definitions:
+#
+# output_fh: Output frequency in hours.
+# nsout: Output frequency in time steps (positive values override "output_fh").
+#
+# output_fh:  1  -1
+# nsout:      -1
+#
+# Coordinate system used by the output grid.
+#
+output_grid:  'lambert_conformal'
+#
+# Parameter definitions for an output grid of type "lambert_conformal":
+#
+# cen_lon: Longitude of center of grid (degrees).
+# cen_lat: Latitude of center of grid (degrees).
+# stdlat1: Latitude of first standard parallel (degrees).
+# stdlat2: Latitude of second standard parallel (degrees).
+# nx: Number of grid cells along x-axis in Lambert conformal (x,y) plane.
+# ny: Number of grid cells along y-axis in Lambert conformal (x,y) plane.
+# lon1: Longitude of center of grid cell at bottom-left corner of grid (degrees).
+# lat1: Latitude of center of grid cell at bottom-left corner of grid (degrees).
+# dx: Grid cell size in x direction (meters).
+# dy: Grid cell size in y direction (meters).
+#
+cen_lon:  -86.16
+cen_lat:  39.77
+stdlat1:  39.77
+stdlat2:  39.77
+nx:       197
+ny:       197
+lon1:     -89.47120417
+lat1:     37.07809642
+dx:       3000.0
+dy:       3000.0
