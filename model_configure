@@ -10,8 +10,8 @@ start_hour:              18
 start_minute:            0
 start_second:            0
 # values for nhours_fcst (length of simulation in hours) can be fractional
-nhours_fcst:             0.16666666666666666
-#nhours_fcst:             2
+#nhours_fcst:             0.16666666666666666
+nhours_fcst:             2
 #nhours_fcst:             0.5
 RUN_CONTINUE:            .false.
 ENS_SPS:                 .false.
