@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script stolen from the SCM contrib directory
+# Script copied from the SCM contrib directory
 
 set -ex
 
@@ -15,9 +15,7 @@ fi
 BASEDIR=$MYDIR/..
 
 # Change to directory containing the physics input data, download and extract archive
-# cd $BASEDIR/scm/data/physics_input_data/
 wget https://github.com/NCAR/ccpp-scm/releases/download/v6.0.0/thompson_tables.tar.gz
 tar -xvf thompson_tables.tar.gz
 rm -f thompson_tables.tar.gz
-# cd $BASEDIR/
 
