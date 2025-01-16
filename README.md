@@ -4,7 +4,7 @@ https://github.com/LarissaReames-NOAA/ufs-weather-model/tree/ideal-periodic
 
 Familiarity with running the UFS model is assumed here for the time being.
 
-The input.nml (examples in the namelists directory) is set up for an 80x80 grid with dx=2000m, running 8 MPI threads. The INPUTS directory includes a python script for generating idealized surface data and orography, although real data inputs can be used, as well (but will have periodic lateral boundary conditions).
+The input.nml (examples in the namelists directory) is set up for an 80x80 grid with dx=2000m, running 16 MPI threads. The INPUTS directory includes a python script for generating idealized surface data and orography, although real data inputs can be used, as well (but will have periodic lateral boundary conditions).
 
 Field tables for variants of the NSSL and Thompson microphysics are in the table_inputs directory. (link or copy to 'field_table')
 
