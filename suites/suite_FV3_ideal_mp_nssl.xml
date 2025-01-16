@@ -9,11 +9,16 @@
     </subcycle>
   </group>
 
+  <!-- model may complain if there is no radiation group, but it can be empty to turn off radiation -->
+  <group name="radiation">
+    <subcycle loop="1">
+    </subcycle>
+  </group>
+
   <group name="physics">
     <!-- Surface iteration loop -->
     <!-- End of surface iteration loop -->
     <subcycle loop="1">
-      <scheme>rayleigh_damp</scheme>
       <scheme>GFS_suite_stateout_update</scheme>
       <!-- <scheme>h2ophys</scheme> -->
       <scheme>get_prs_fv3</scheme>

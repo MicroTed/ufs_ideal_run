@@ -1,6 +1,6 @@
 &atmos_model_nml
     avg_max_length = 3600.0
-    blocksize = 36
+    blocksize = 32
     ccpp_suite = 'FV3_ideal_mp_nssl'
     chksum_debug = .false.
     dycore_only = .false.
@@ -29,12 +29,8 @@
     checker_tr = .false.
     filtered_terrain = .true.
     gfs_dwinds = .true.
-    levp = 61
+    levp = 65
     nt_checker = 0
-/
-
-&fms2_io_nml
-  netcdf_default_format = "netcdf4"
 /
 
 &fms_nml
@@ -43,36 +39,14 @@
     print_memory_usage = .false.
 /
 
-&test_case_nml
-      test_case = 60
-      bubble_type = 3
-      n_bub = 1
-      jcenters = 40
-      icenters = 25
-      t_profile = -1
-      q_profile = -1
-      ws_profile = -1
-      bubble_t = 2.0
-      bubble_q = 0.
-      bubble_rad_x = 4000.
-      bubble_rad_y = 4000.
-      bubble_zc = 1500.
-      us0 = 12.
-      umove = 0.0
-      vmove = 0.0      
+&fms2_io_nml
+  netcdf_default_format = "netcdf4"
 /
 
 &fv_core_nml
-   ! simpson = .true.
     a_imp = 1.0
     adjust_dry_mass = .false.
-    grid_type = 4
-    npz_type = 'meso'
-    dx_const = 2000.
-    dy_const = 2000.
-    deglat = 35.
-    deglon = -99.
-    bc_update_interval = 1
+    bc_update_interval = 3
     beta = 0.0
     consv_am = .false.
     consv_te = 0.0
@@ -83,12 +57,17 @@
     d_con = 1.0
     d_ext = 0.0
     dddmp = 0.1
+    deglat = 35.
+    deglon = -95.
     delt_max = 0.008
     dnats = 0
     do_sat_adj = .false.
     do_schmidt = .true.
     do_vort_damp = .true.
     dwind_2d = .false.
+    dx_const = 2000.
+    dy_const = 2000.
+    dz_min = 2
     external_eta = .false.
     external_ic = .false.
     fill = .true.
@@ -96,6 +75,7 @@
     fv_debug = .false.
     fv_sg_adj = 300
     gfs_phil = .false.
+    grid_type = 4 ! doubly-periodic grid (4)
     hord_dp = 6
     hord_mt = 6
     hord_tm = 6
@@ -109,45 +89,44 @@
     kord_tm = -9
     kord_tr = 9
     kord_wz = 9
-    layout = 4, 2
-!    layout = 1, 1
-!    layout = 3, 2
-!    layout = 2,2
-!    layout = 2,1
+    layout = 1,1  ! can be set at 1,1 and the model will figure out an appropriate layout
     make_nh = .true.
     mountain = .false.
-    n_split = 3
+    n_split = 0 ! can leave at 0 and the model will set an appropriate value automatically
     n_sponge = 9
     n_zs_filter = 0
     na_init = 1
     ncep_ic = .false.
-    nggps_ic = .false.
+    nggps_ic = .true.
     no_dycore = .false.
     nord = 3
-!    nord_zs_filter = 4
-    npx = 80
-    npy = 80
+    npx =  80
+    npy =  80
     npz = 60
+    npz_type = 'meso'
+    nrows_blend = 0
     ntiles = 1
     nudge_qv = .false.
-    nwat = 7
+    nwat = 7 ! Number of water species (6 for Thompson; 7 for NSSL with hail)
     p_fac = 0.1
     phys_hydrostatic = .false.
     print_freq = 6
-    !range_warn = .true.
+    psm_bc = 1
+    range_warn = .true.
     read_increment = .false.
     regional = .false.
+    regional_bcs_from_gsi = .false.
     res_latlon_dynamics = 'fv3_increment.nc'
     reset_eta = .false.
-!    rf_cutoff = 2000.0
-    sg_cutoff = 10000.0
+    rf_cutoff = 0.0
     stretch_fac = 0.999
-    target_lat = 38.5
-    target_lon = -97.5
+    target_lat = 38.0
+    target_lon = -120.0
     tau = 5.0
     use_hydro_pressure = .false.
     vtdm4 = 0.02
     warm_start = .false.
+    write_restart_with_bcs = .false.
     z_tracer = .true.
 /
 
@@ -155,12 +134,7 @@
     grid_file = 'INPUT/grid_spec.nc'
 /
 
-
 &gfs_physics_nml
-    effr_in = .true.
-!    bl_mynn_edmf = 1
-!    bl_mynn_edmf_mom = 1
-!    bl_mynn_tkeadvect = .true.
     bl_mynn_edmf = 0
     bl_mynn_edmf_mom = 0
     bl_mynn_tkeadvect = .false.
@@ -170,18 +144,19 @@
     cnvgwd = .false.
     cplflx = .false.
     debug = .false.
-!    do_mynnedmf = .true.
+    do_deep = .false.
     do_mynnedmf = .false.
     do_mynnsfclay = .false.
-!    do_sfcperts = .false.
     do_shum = .false.
     do_skeb = .false.
+    do_spp  = .false.
     do_sppt = .false.
     dspheat = .true.
+    effr_in = .true.
     fhcyc = 0.0
     fhlwr = 1200.0
     fhswr = 1200.0
-    fhzero = 0.25
+    fhzero = 1.0
     h2o_phys = .false.
     hybedmf = .false.
     iaer = 111
@@ -192,13 +167,12 @@
     icloud_bl = 1
     ico2 = 2
     iems = 1
-    imfdeepcnv = -1
-    imfshalcnv = -1
-    imp_physics = 17
-    nssl_cccn = 0.9e9
-    nssl_hail_on = .true. ! remember to change nwat
-    nssl_ccn_on = .true.
- !   nssl_invertccn = .true.
+    imfdeepcnv = 0
+    imfshalcnv = 0
+    imp_physics = 17 ! 8 for thompson; 17 for nssl; set nwat to match
+    nssl_cccn    = 0.6e9
+    nssl_ccn_on  = .true.
+    nssl_hail_on = .true. ! remember to change nwat to 7 for true
     nssl_3moment = .false.
     iopt_alb = 2
     iopt_btr = 1
@@ -206,7 +180,7 @@
     iopt_dveg = 2
     iopt_frz = 1
     iopt_inf = 1
-    iopt_rad = 0
+    iopt_rad = 1
     iopt_run = 1
     iopt_sfc = 1
     iopt_snf = 4
@@ -219,26 +193,31 @@
     ivegsrc = 1
     ldiag3d = .false.
     lheatstrg = .false.
+    lndp_type = 0
     lradar = .true.
-    lsm = 2
+    lsm = 1
     lsoil = 4
     lsoil_lsm = 4
     ltaerosol = .false.
     lwhtr = .true.
+    n_var_lndp = 0
+    n_var_spp = 0
+    nsfullradar_diag = 3600
     nst_anl = .true.
     nstf_name = 2, 1, 1, 0, 5
     oz_phys = .false.
-    oz_phys_2015 = .true.
+    oz_phys_2015 = .false.
     pdfcld = .false.
     pre_rad = .false.
+    print_diff_pgr = .true.
     prslrd0 = 0.0
     random_clds = .false.
     redrag = .true.
     satmedmf = .false.
     shal_cnv = .false.
     swhtr = .true.
-    trans_trac = .true.
-    ttendlim = -1.0 !50.0
+    trans_trac = .false.
+    ttendlim = -999
     use_ufo = .true.
 /
 
@@ -246,103 +225,61 @@
     interp_method = 'conserve_great_circle'
 /
 
-&nam_sfcperts
-    iseed_sfc = 0
-    nsfcpert = 6
-    pertalb = -999.0
-    pertlai = -999.0
-    pertshc = -999.0
-    pertvegf = -999.0
-    pertz0 = -999.0
-    pertzt = -999.0
-    sfc_lscale = 500000
-    sfc_tau = 21600
-    sppt_land = .false.
-/
-
-&nam_stochy
-    iseed_shum = 2
-    iseed_skeb = 3
-    iseed_sppt = 1
-    new_lscale = .true.
-    shum = 0.006
-    shum_lscale = 150000
-    shum_tau = 21600
-    shumint = 3600
-    skeb = 0.5
-    skeb_lscale = 150000
-    skeb_tau = 21600
-    skeb_vdof = 10
-    skebint = 3600
-    skebnorm = 1
-    sppt = 1.0
-    sppt_logit = .true.
-    sppt_lscale = 150000
-    sppt_sfclimit = .false.
-    sppt_tau = 21600
-    spptint = 3600
-    use_zmtnblck = .false.
-/
-
-
 &namsfc
-       FNGLAC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_glacier.2x2.grb",
-       FNMXIC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_maxice.2x2.grb",
-       FNTSFC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/RTGSST.1982.2012.monthly.clim.grb",
-       FNSNOC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_snoclim.1.875.grb",
-       FNZORC   = "igbp"
-!       FNZORC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_zorclim.1x1.grb",
-       FNALBC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_snowfree_albedo.bosu.t126.384.190.rg.grb",
-       FNALBC2  = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_albedo4.1x1.grb",
-       FNAISC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/CFSR.SEAICE.1982.2012.monthly.clim.grb",
-       FNTG3C   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_tg3clim.2.6x1.5.grb",
-       FNVEGC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_vegfrac.0.144.decpercent.grb",
-       FNVETC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_vegtype.igbp.t126.384.190.rg.grb",
-       FNSOTC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_soiltype.statsgo.t126.384.190.rg.grb",
-       FNSMCC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_soilmgldas.t126.384.190.grb",
-       FNMSKH   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/seaice_newland.grb",
-       FNTSFA   = "",
-       FNACNA   = "",
-       FNSNOA   = "",
-       FNVMNC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_shdmin.0.144x0.144.grb",
-       FNVMXC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_shdmax.0.144x0.144.grb",
-       FNSLPC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_slope.1x1.grb",
-       FNABSC   = "/home/Larissa.Reames/fv3/UFS_UTILS_release/fix/fix_am/global_mxsnoalb.uariz.t126.384.190.rg.grb",
-       LDEBUG   =.true.,
-       FSMCL(2) = 99999
-       FSMCL(3) = 99999
-       FSMCL(4) = 99999
-       FTSFS    = 90
-       FAISS    = 99999
-       FSNOL    = 99999
-       FSICL    = 99999
-       FTSFL    = 99999,
-       FAISL    = 99999,
-       FVETL    = 99999,
-       FSOTL    = 99999,
-       FvmnL    = 99999,
-       FvmxL    = 99999,
-       FSLPL    = 99999,
-       FABSL    = 99999,
-       FSNOS    = 99999,
-       FSICS    = 99999,
+    fabsl = 99999
+    faisl = 99999
+    faiss = 99999
+    fnabsc = 'C3337.maximum_snow_albedo.tileX.nc'
+    fnacna = ''
+    fnaisc = 'CFSR.SEAICE.1982.2012.monthly.clim.grb'
+    fnalbc = 'C3337.snowfree_albedo.tileX.nc'
+    fnalbc2 = 'C3337.facsf.tileX.nc'
+    fnglac = 'global_glacier.2x2.grb'
+    fnmskh = 'seaice_newland.grb'
+    fnmxic = 'global_maxice.2x2.grb'
+    fnslpc = 'C3337.slope_type.tileX.nc'
+    fnsmcc = 'global_soilmgldas.t126.384.190.grb'
+    fnsnoa = ''
+    fnsnoc = 'global_snoclim.1.875.grb'
+    fnsotc = 'C3337.soil_type.tileX.nc'
+    fntg3c = 'C3337.substrate_temperature.tileX.nc'
+    fntsfa = ''
+    fntsfc = 'RTGSST.1982.2012.monthly.clim.grb'
+    fnvegc = 'C3337.vegetation_greenness.tileX.nc'
+    fnvetc = 'C3337.vegetation_type.tileX.nc'
+    fnvmnc = 'C3337.vegetation_greenness.tileX.nc'
+    fnvmxc = 'C3337.vegetation_greenness.tileX.nc'
+    fnzorc = 'igbp'
+    fsicl = 99999
+    fsics = 99999
+    fslpl = 99999
+    fsmcl = 99999, 99999, 99999
+    fsnol = 99999
+    fsnos = 99999
+    fsotl = 99999
+    ftsfl = 99999
+    ftsfs = 90
+    fvetl = 99999
+    fvmnl = 99999
+    fvmxl = 99999
+    ldebug = .true.
 /
 
-&surf_map_nml
-    cd2 = -1
-    cd4 = 0.12
-    max_slope = 0.4
-    n_del2_strong = 0
-    n_del2_weak = 2
-    n_del4 = 1
-    peak_fac = 1.0
-    zero_ocean = .false.
-/
- 
-$nssl_mp_params
-   icdx    = 6,
-   icdxhl  = 6,
-   ehw0    = 0.9,
-   ehlw0   = 0.9,
-   ihlcnh  = 3,
+&test_case_nml
+      test_case = 60
+      bubble_type = 1
+      n_bub = 1
+      jcenters = 40
+      icenters = 25
+      t_profile = -1
+      q_profile = -1
+      ws_profile = -1
+      bubble_t = 3.
+      bubble_q = 0.
+      bubble_rad_x = 5000.
+      bubble_rad_y = 5000.
+      bubble_zc = 1500.
+      us0 = 12.
+      umove = 5.0
+    !  vmove = 0.0
 /
