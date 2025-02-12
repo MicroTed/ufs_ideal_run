@@ -265,8 +265,7 @@
     ldebug = .true.
 /
 
-&test_case_nml
-      test_case = 60
+&fv_ideal_nml
       bubble_type = 1
       n_bub = 1
       jcenters = 40
