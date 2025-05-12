@@ -45,9 +45,7 @@
     print_memory_usage = .false.
 /
 
-&test_case_nml
-      test_case = 60
-!      test_case = 30
+&fv_processmodel_nml
       bubble_type = 3
       n_bub = 1
       jcenters = 40
@@ -55,13 +53,14 @@
       t_profile = -1
       q_profile = -1
       ws_profile = -1
-      bubble_t = 2.0
+      bubble_t = 2.
       bubble_q = 0.
-      bubble_rad_x = 4000.
-      bubble_rad_y = 4000.
+      bubble_rad_x = 5000.
+      bubble_rad_y = 5000.
       bubble_zc = 1500.
       us0 = 12.
-      
+      umove = 5.0
+    !  vmove = 0.0
 /
 
 &fv_core_nml
