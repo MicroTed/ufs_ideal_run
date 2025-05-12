@@ -10,9 +10,9 @@ Field tables for variants of the NSSL and Thompson microphysics are in the table
 
 Input soundings are the same format as WRF ideal cases (examples in the soundings directory) (link or copy to 'input_sounding')
 
-A couple idealized suites are in the suites directory, and it should be possible to use any full physics suite as long as any needed input files are available.
+A couple idealized suites are in the suites directory, and it should be possible to use any full physics suite as long as any needed input files are available. Note that the FV3_ideal_mp_thompson suite is included here in the suites directory, but not in FV3/ccpp/suites.
 
-For the Thompson microphysics, input files can be downloaded with the get_thompson_tables.sh script.
+For the Thompson microphysics, input files can be downloaded with the get_thompson_tables.sh script. 
 
-For more details see the documents in docs/ideal_processmodel_doc at https://github.com/MicroTed/ufs-weather-model/tree/ideal-periodic (originally created by Larissa Reames) 
+For more details see the readme in FV3/fv3/atmos_cubed_sphere/docs/ideal_processmodel_doc (originally created by Larissa Reames) 
 
