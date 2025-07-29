@@ -102,7 +102,7 @@
     nord = 3
     npx =  80
     npy =  80
-    npz = 60
+    npz = 63
     npz_type = 'meso'
     nrows_blend = 0
     ntiles = 1
@@ -265,7 +265,7 @@
     ldebug = .true.
 /
 
-&fv_ideal_nml
+&fv_processmodel_nml
       bubble_type = 1
       n_bub = 1
       jcenters = 40
