@@ -1,6 +1,9 @@
+! For use with suite_FV3_ideal_mp_nssl.xml and set for 2-moment (default, nssl_3moment=.false.) 
+! version of NSSL cloud physics. Use the 2m field table: field_table.nssl2m
+
 &atmos_model_nml
     avg_max_length = 3600.0
-    blocksize = 32
+    blocksize = 36
     ccpp_suite = 'FV3_ideal_mp_nssl'
     chksum_debug = .false.
     dycore_only = .false.
@@ -281,4 +284,23 @@
       us0 = 12.
       umove = 5.0
     !  vmove = 0.0
+/
+
+&surf_map_nml
+    cd2 = -1
+    cd4 = 0.12
+    max_slope = 0.4
+    n_del2_strong = 0
+    n_del2_weak = 2
+    n_del4 = 1
+    peak_fac = 1.0
+    zero_ocean = .false.
+/
+ 
+$nssl_mp_params
+   icdx    = 6,
+   icdxhl  = 6,
+   ehw0    = 0.9,
+   ehlw0   = 0.9,
+   ihlcnh  = 3,
 /

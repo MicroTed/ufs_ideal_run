@@ -9,16 +9,19 @@ start_minute:            0
 start_second:            0
 # values for nhours_fcst (length of simulation in hours) can be fractional
 #nhours_fcst:             0.16666666666666666
+#nhours_fcst:             0.08333333333333333
 nhours_fcst:             2
 #nhours_fcst:             0.5
 RUN_CONTINUE:            .false.
 ENS_SPS:                 .false.
 # model time step (seconds)
+# dt_atmos:                 3
 # dt_atmos:                 6
-dt_atmos:                10
+ dt_atmos:                10
 # output frequency is in hours, and can be fractional to get, say, 5, 10, 15 min. output (e.g., 0.08333333333333333,  0.16666666666666666, 0.25). Trailing '-1' is needed
 # Remember to set intervals in diag_table to match the output frequency here
 output_fh:               0.08333333333333333 -1
+#output_fh:               0.01666666666666666 -1
 # output_fh:               0.002777777777778 0.08333333333333333 -1
 # output_fh:               0.16666666666666666 -1
 cpl:                     .false.

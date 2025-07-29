@@ -1,4 +1,7 @@
-#!/usr/bin/env /Users/Shared/miniconda3/bin/python3
+#!/usr/bin/env python3
+# Set the python path to one that has the netcdf4 and numpy packages installed.
+# On a desktop that might be something like:
+## !/usr/bin/env /Users/Shared/miniconda3/bin/python3
 
 # Creates sfcdat_ideal.nc and orogdat_ideal.nc for UFS ideal setup
 #   THIS WILL NOT OVERWRITE EXISITNG FILES (Error code will be issued)
@@ -8,19 +11,24 @@
 # and deglon in the fv_core_nml namelist to set these (probably only important for
 # radiation and Coriolis, if enabled)
 #
-from netCDF4 import Dataset    # Note: python is case-sensitive!
+# Orography is flat. Probably somebody else could figure out how to introduce idealized terrain
+# if they really wanted to
+#
+from netCDF4 import Dataset
 import numpy as np
 
-# filenames can be anything, but then must link as INPUT/sfc_data.nc and INPUT/oro_data.nc
+# filenames can be anything, but then must link or rename as INPUT/sfc_data.nc and INPUT/oro_data.nc
 sfcfilename = 'sfc_data.nc'
-orofilename = 'oro_dat.nc'
+orofilename = 'oro_data.nc'
 
 # dimensions:
 nx = 200 # should have nx >= npx
 ny = 200 # should have ny >= npy
-nz = 4  # number of soil layer; should be 4 for noahmp; Can set to 9 for ruc lsm and set namelist appropriately
+nz = 4  # number of soil layers; should be 4 for noahmp; Can set to 9 for ruc lsm and set namelist appropriately
 
 # The following are used to set various array values 
+# sfc_data variables are set to single values for the whole domain. It should be possible to 
+# modify the code to set up a (periodic) variation, e.g., land/sea strips or islands.
 tmpslmsk = 1 # sea/land mask (0=sea, 1=land)
 tmpstype = 1 # land surface type; if set to 0 or 14, will get water surface
 # soil types: 1, 'SAND' : 2, 'LOAMY SAND' : 3, 'SANDY LOAM' : 4, 'SILT LOAM' : 5, 'SILT' : 6, 'LOAM' : 7, 'SANDY CLAY LOAM' : 8, 'SILTY CLAY LOAM' : 9, 'CLAY LOAM' : 10,'SANDY CLAY' : 11,'SILTY CLAY' : 12,'CLAY' : 13,'ORGANIC MATERIAL' : 14,'WATER'
@@ -111,9 +119,10 @@ oro_vars = {     #  keys
 'elvmax': {'longName':'elvmax','value':0} # hprime (:,14) ; orographic metrics
 }
 
+# open the netcdf file
 ncfile = Dataset(sfcfilename,mode='w',clobber=False,format='NETCDF4_CLASSIC') 
 
-
+# set dimensions
 x_dim = ncfile.createDimension('xaxis_1', nx)     # latitude axis
 y_dim = ncfile.createDimension('yaxis_1', ny)    # longitude axis
 z_dim = ncfile.createDimension('zaxis_1', nz)    # longitude axis
@@ -153,6 +162,7 @@ geolon.units = 'degrees_east'
 geolon.longName = 'Longitude'
 geolon[:] = lon1
 
+# loop to set the sfc variables
 for k, key in enumerate(sfc_vars):
     if sfc_vars[key]["ndims"] == '2':
        var = ncfile.createVariable(key, np.float64, ('yaxis_1','xaxis_1'),zlib=True)
@@ -167,13 +177,13 @@ for k, key in enumerate(sfc_vars):
     var[:] = sfc_vars[key].get("value")
 
 
-# first print the Dataset object to see what we've got
+# print the Dataset object to confirm
 print(ncfile)
 # close the Dataset.
 ncfile.close(); print('Sfc Dataset is closed!')
 
 
-# Ideal oro_data.nc
+# Now create the ideal oro_data.nc
 ncfile = Dataset(orofilename,mode='w',clobber=False,format='NETCDF4_CLASSIC') 
 
 lat = ncfile.createDimension('lat', nx)     # latitude axis
@@ -199,7 +209,7 @@ for k, key in enumerate(oro_vars):
     var[:] = oro_vars[key].get("value")
 
 
-# first print the Dataset object to see what we've got
+# print the Dataset object to confirm
 print(ncfile)
 # close the Dataset.
 ncfile.close(); print('Orog Dataset is closed!')
