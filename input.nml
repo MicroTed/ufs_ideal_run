@@ -82,7 +82,7 @@
     hord_dp = 6
     hord_mt = 6
     hord_tm = 6
-    hord_tr = 10
+    hord_tr = 8 ! 10
     hord_vt = 6
     hydrostatic = .false.
     io_layout = 1, 1
@@ -90,7 +90,7 @@
     ke_bg = 0.0
     kord_mt = 9
     kord_tm = -9
-    kord_tr = 9
+    kord_tr = 8 ! 9 ! 8 ! 4 ! 7 ! 9
     kord_wz = 9
     layout = 1,1  ! can be set at 1,1 and the model will figure out an appropriate layout
     make_nh = .true.
