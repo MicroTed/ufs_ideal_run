@@ -14,5 +14,7 @@ A couple idealized suites are in the suites directory, and it should be possible
 
 For the Thompson microphysics, input files can be downloaded with the get_thompson_tables.sh script. 
 
+If you get ESMF errors about 'Invalid argument', then the fd_ufs.yaml file may be out of date. One location for this file is ufs_weather_model/tests/parm
+
 For more details see the readme in FV3/fv3/atmos_cubed_sphere/docs/ideal_processmodel_doc (originally created by Larissa Reames) 
 
